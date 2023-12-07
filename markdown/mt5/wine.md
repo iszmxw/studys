@@ -1,14 +1,16 @@
-# wine 下运行 mt5
+# 必要说明
 
-## `mt5` 是一款在 `windows` 下运行的程序
+- `mt5` 是一款在 `windows` 下运行的程序，
 
 - 由于之前采集的数据源程序一直在 windows 服务器中运行
 - 先前业务比较繁忙，写好了就直接就丢在 windows 服务器中了
 - 现在抽空折腾一下把原有的 exe 程序放在 linux 中统一管理和运行
 - 这里就用到我们之前都封装的 docker + ubuntu + wine 这三件套了
+- 主要是靠 wine 下运行 mt5
 
+## 运行容器
 
-## 首先我们拉取镜像，直接运行一个容器
+- 首先我们拉取镜像，直接运行一个容器
 
 ```bash
 # 拉取镜像 iszmxw/wine:8.0.2 运行一个 mt5 的容器
@@ -27,7 +29,9 @@ service dbus start
 # 看到 ok 表示已经成功了
 ```
 
-## 使用远程桌面链接工具进行链接
+## 远程控制
+
+-  使用远程桌面链接工具进行链接
 
 - windows 用户
 
@@ -42,7 +46,9 @@ service dbus start
 
 建议使用 `wineuser` 的身份进入
 
-## 下载 `mt5` 程序
+## 下载程序
+
+- 下载 `mt5`
 
 - 我用本机电脑下载的
 - 下载好后上传到宿主机
@@ -65,7 +71,7 @@ docker cp Fonts/ mt5:/home/wineuser/.wine/drive_c/windows/
 ```
 
 
-## 安装 mt5 
+## 安装程序
 
 ```bash
 wine mt5setup.exe
@@ -90,30 +96,30 @@ internal error #112
  1 errors,0 warnings
 ```
 
-## 解决错误
+## 查找原因
 
 - 网上查找资料后说是 缺少 `winhttp` 组件
 
 - 安装 `winhttp` 需要用到 winetrick
 
 ```text
-但是我通过一顿操作后发现还是无解，排除掉了这个原因，我运行其他的exe软件又可以，这里只要编译的时候就会提示#112 内部错误
+但是我通过一顿操作后发现还是无解，排除掉了这个原因，我运行其他的exe软件又可以，
+这里只要编译的时候就会提示#112 内部错误，所以排除掉了那些问题，再找找其他原因
 ```
 
-## 继续网上查找原因
+## 解决错误
 
-通过谷歌我找到了一些和我有同样错误的用户，对照了官方错误表只说是内部错误，不够详细，有些人说是权限问题，我也有些怀疑
+- 通过谷歌我找到了一些和我有同样错误的用户，对照了官方错误表只说是内部错误
+- 不够详细，有些人说是权限问题，我也有些怀疑
 
 ![谷歌搜索](https://raw.githubusercontent.com/iszmxw/FigureBed/master/images/studys/202312071738271.png)
 
 ![论坛用户回复](https://raw.githubusercontent.com/iszmxw/FigureBed/master/images/studys/202312071741090.png)
 
-- 才行确实是用户权限问题
-
-由于我用的是容器，另外我拿我的mac和ubuntu机器装了都可以正常运行和编译，那么可能就是容器的问题了，通过网上查找相关资料发现容器有设置权限的参数
+- 由于我用的是容器，另外我拿我的 `mac` 和 `ubuntu` 机器装了都可以正常运行和编译，
+- 那么可能就是容器的问题了，通过网上查找相关资料发现容器有设置权限的参数
 
 - `privileged` ：用来给容器 `root` 权限，不安全的
-
 
 - 我们这里 删除掉之前的容器，加上特殊权限后再试试
 
@@ -125,6 +131,8 @@ docker rm mt5
 # 加上特殊参数执行容器
 docker run -itd --privileged=true --name=mt5 --net=host iszmxw/wine:8.0.2 bash
 ```
+
+## 论证解决
 
 - 再次尝试上面步骤，安装运行 mt5 
 
