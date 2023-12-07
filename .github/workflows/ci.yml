@@ -1,0 +1,54 @@
+# 打包 studys 文档
+name: CI自动化部署
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 清理缓存
+      run: rm -rf ${{ runner.workspace }}/actions/*
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: 使用 Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: 查看 npm 版本
+      run: npm --version
+
+    - name: 安装 pnpm
+      run: npm install -g pnpm@8.2.0
+
+    - name: 查看 pnpm 版本
+      run: pnpm --version
+
+    - name: 安装依赖
+      run: pnpm install
+
+    - name: 删除docs
+      run: rm -rf docs
+
+    - name: 创建docs
+      run: mkdir docs
+
+    - name: 打包
+      run: pnpm run build
+
+    - name: 部署
+      uses: JamesIves/github-pages-deploy-action@v4.5.0
+      with:
+        commit_user_name: "iszmxw"
+        commit_user_email: "mail@54zm.com"
+        cname: note.54zm.com
+        commit_message: "自动更新文档"
+        branch: main
+        folder: .
