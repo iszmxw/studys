@@ -27,8 +27,8 @@ module.exports = [
     getSideBar('Wine', [
         ['/wine/wine-M1', 'M1 下安装 wine 过程'],
     ]),
-    getSideBar('Mql5', [
-        ['/mql5/wine', 'wine下运行mql5'],
+    getSideBar('MT5', [
+        ['/mt5/wine', 'wine下运行mt5'],
     ])
 ]
 
