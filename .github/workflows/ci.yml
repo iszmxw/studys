@@ -50,5 +50,5 @@ jobs:
         commit_user_email: "mail@54zm.com"
         cname: note.54zm.com
         commit_message: "自动更新文档"
-        branch: main
-        folder: .
+        branch: gh-pages
+        folder: docs
