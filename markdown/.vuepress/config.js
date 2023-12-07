@@ -4,7 +4,7 @@ const _sidebar = require('./sidebar')
 module.exports = {
     title: '小明哥笔记', // 设置网站标题
     description: '记录日常开发笔记',
-    base: '/', // 设置站点根路径
+    base: '/studys/', // 设置站点根路径
     dest: 'docs', // 设置输出目录
     head: [
         ['link', { rel: 'icon', href: '/assets/img/plan.svg' }],
