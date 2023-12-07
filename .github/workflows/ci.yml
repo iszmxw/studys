@@ -46,9 +46,7 @@ jobs:
     - name: 部署
       uses: JamesIves/github-pages-deploy-action@v4.5.0
       with:
-        commit_user_name: "iszmxw"
-        commit_user_email: "mail@54zm.com"
-        cname: note.54zm.com
-        commit_message: "自动更新文档"
+        # 部署分支 gh-pages（GitHub Pages 读取的分支）
         branch: gh-pages
+        # 需要部署的文件在 docs 目录下面，也就是我们使用 npm run build 生成的静态文件的位置
         folder: docs
