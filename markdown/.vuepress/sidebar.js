@@ -29,6 +29,7 @@ module.exports = [
     ]),
     getSideBar('MT5', [
         ['/mt5/wine', 'wine下运行mt5'],
+        ['/mt5/mt5', 'Mt5采集转发外汇数据'],
     ])
 ]
 
