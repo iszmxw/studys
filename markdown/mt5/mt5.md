@@ -98,30 +98,11 @@ void SendDataToGolang(string data)
   }
 ```
 
-- 首先我们拉取镜像，直接运行一个容器
-
-```bash
-# 拉取镜像 iszmxw/wine:8.0.2 运行一个 mt5 的容器
-docker run -itd --name=mt5 --net=host iszmxw/wine:8.0.2 bash
-# 查看容器的 id
-docker ps -a |grep mt5
-# 进入容器 id  56710fe0ce54
-docker exec -it 56710fe0ce54 bash
-
-# 查看 xrdp 远程服务是否开启，开了我们才能进行远程桌面控制
-service xrdp status
-# 没启动的话执行下面的命令启动
-service xrdp restart
-# 启动 dbus 服务
-service dbus start
-# 看到 ok 表示已经成功了
-```
-
 ## 使用说明
 
 - 由于程序引用了三方库，这里我们需要引入一下 `JAson.mqh`
 
-文件下载 [JAson](../static/JAson.mqh)
+文件下载 [JAson](https://raw.githubusercontent.com/iszmxw/studys/main/markdown/static/JAson.mqh)
 
 将该文件放到如图所示位置 -> `MQL5/Include/JAson.mqh`
 
